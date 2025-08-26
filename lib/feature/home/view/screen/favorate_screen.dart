@@ -1,3 +1,5 @@
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/colorStyle.dart';
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/textStyle.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteRecipesScreen extends StatefulWidget {
@@ -13,10 +15,11 @@ class _FavoriteRecipesScreenState extends State<FavoriteRecipesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorStyle.whiteColor,
       body: Center(
         child: Text(
           "No favorite recipes yet ❤️",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          style: Textstyle.text16BalckBolod.copyWith(fontSize: 20),
         ),
       ),
     );

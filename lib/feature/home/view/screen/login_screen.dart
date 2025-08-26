@@ -1,3 +1,5 @@
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/colorStyle.dart';
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/textStyle.dart';
 import 'package:Xenhomm_restaurant_Recipes/feature/home/view/screen/home_screen.dart';
 import 'package:Xenhomm_restaurant_Recipes/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Card(
-                color: Colors.white,
+                color: ColorStyle.whiteColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -42,15 +44,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text(
                         'Welcome to Xenhomm restaurant Recipes App',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Textstyle.text16BalckBolod,
                       ),
                       const SizedBox(height: 8),
                       const Text(
                         'Smart Recipe, Just for you',
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                        style: Textstyle.text14grey,
                       ),
                     ],
                   ),
@@ -64,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: ColorStyle.whiteColor,
                       elevation: 3,
                     ),
                     onPressed: () {
@@ -75,15 +74,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(color: Colors.black),
-                    ),
+                    child: const Text('Login', style: Textstyle.text16Balck),
                   ),
                   const SizedBox(width: 19),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: ColorStyle.whiteColor,
                       elevation: 3,
                     ),
                     onPressed: () {
@@ -94,10 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(color: Colors.black),
-                    ),
+                    child: const Text('Sign Up', style: Textstyle.text16Balck),
                   ),
                 ],
               ),

@@ -1,5 +1,10 @@
-import 'package:dio/dio.dart';
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/colorStyle.dart';
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/textStyle.dart';
+import 'package:Xenhomm_restaurant_Recipes/feature/home/view/widget/custom_infoBox.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:Xenhomm_restaurant_Recipes/feature/home/cubit/recipes_cubit.dart';
+import 'package:Xenhomm_restaurant_Recipes/feature/home/model/recipe_model.dart';
 
 class RandemRecipeScreen extends StatefulWidget {
   const RandemRecipeScreen({super.key, required this.currentIndex});
@@ -11,47 +16,41 @@ class RandemRecipeScreen extends StatefulWidget {
 }
 
 class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
-  List recipes = [];
   int? currentIndex;
 
   @override
   void initState() {
     super.initState();
     currentIndex = widget.currentIndex;
-    getData();
-  }
-
-  Future<void> getData() async {
-    Dio dio = Dio();
-    var response = await dio.get('https://dummyjson.com/recipes');
-    setState(() {
-      recipes = response.data['recipes'];
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final recipe = recipes.isNotEmpty ? recipes[currentIndex ?? 0] : {};
-
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: recipes.isNotEmpty
-            ? BoxDecoration(
+      body: BlocBuilder<RecipesCubit, RecipesState>(
+        builder: (context, state) {
+          if (state is RecipesLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: ColorStyle.greenColor),
+            );
+          } else if (state is RecipessSuccess) {
+            final recipes = state.recipes;
+            if (recipes.isEmpty) {
+              return const Center(child: Text("No recipes available"));
+            }
+
+            final RecipeModel recipe = recipes[currentIndex ?? 0];
+
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(recipe['image'].toString()),
+                  image: NetworkImage(recipe.image),
                   fit: BoxFit.cover,
                 ),
-              )
-            : null,
-        child: recipes.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: Color.fromARGB(255, 12, 177, 122),
-                ),
-              )
-            : Padding(
+              ),
+              child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Card(
                   color: Colors.white.withOpacity(0.9),
@@ -73,7 +72,7 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                                 topRight: Radius.circular(20),
                               ),
                               child: Image.network(
-                                recipe['image'],
+                                recipe.image,
                                 fit: BoxFit.cover,
                                 width: double.infinity,
                                 height: double.infinity,
@@ -85,7 +84,7 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.arrow_back_ios,
-                                  color: Color.fromARGB(255, 12, 177, 122),
+                                  color: ColorStyle.greenColor,
                                 ),
                                 onPressed: () {
                                   Navigator.pop(context);
@@ -98,7 +97,7 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.favorite_border,
-                                  color: Color.fromARGB(255, 12, 177, 122),
+                                  color: ColorStyle.greenColor,
                                 ),
                                 onPressed: () {},
                               ),
@@ -109,18 +108,16 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.navigate_before_outlined,
-                                  color: Color.fromARGB(255, 12, 177, 122),
+                                  color: ColorStyle.greenColor,
                                   size: 30,
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    if (recipes.isNotEmpty) {
-                                      currentIndex =
-                                          ((currentIndex ?? 0) -
-                                              1 +
-                                              recipes.length) %
-                                          recipes.length;
-                                    }
+                                    currentIndex =
+                                        ((currentIndex ?? 0) -
+                                            1 +
+                                            recipes.length) %
+                                        recipes.length;
                                   });
                                 },
                               ),
@@ -131,16 +128,14 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.navigate_next_outlined,
-                                  color: Color.fromARGB(255, 12, 177, 122),
+                                  color: ColorStyle.greenColor,
                                   size: 30,
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    if (recipes.isNotEmpty) {
-                                      currentIndex =
-                                          ((currentIndex ?? 0) + 1) %
-                                          recipes.length;
-                                    }
+                                    currentIndex =
+                                        ((currentIndex ?? 0) + 1) %
+                                        recipes.length;
                                   });
                                 },
                               ),
@@ -156,14 +151,11 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                recipe['name'],
-                                style: const TextStyle(
-                                  fontSize: 22,
+                                recipe.name,
+                                style: Textstyle.text20BalckBolod.copyWith(
                                   fontFamily: 'Pacifico',
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 12),
 
                               GridView.count(
                                 shrinkWrap: true,
@@ -172,87 +164,58 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                                 crossAxisSpacing: 6,
                                 childAspectRatio: 1.2,
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.green[100],
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: const EdgeInsets.all(8),
-                                    child: Center(
-                                      child: Text(
-                                        'meal Type: ${recipe['mealType']}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
+                                  infoBox(
+                                    "Meal Type",
+                                    recipe.mealType.toString(),
+                                    ColorStyle.greenColor100,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange[100],
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: const EdgeInsets.all(8),
-                                    child: Center(
-                                      child: Text(
-                                        'cook time: ${recipe['cookTimeMinutes']} min',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
+                                  infoBox(
+                                    "Cook Time",
+                                    "${recipe.cookTimeMinutes} min",
+                                    ColorStyle.orangeColor100,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.purple[100],
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    padding: const EdgeInsets.all(8),
-                                    child: Center(
-                                      child: Text(
-                                        'difficulty: ${recipe['difficulty']}',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
+                                  infoBox(
+                                    "Difficulty",
+                                    recipe.difficulty,
+                                    ColorStyle.purpelColor100,
                                   ),
                                 ],
                               ),
-
                               const SizedBox(height: 16),
 
-                              const Text(
+                              Text(
                                 'Instructions',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Textstyle.text20BalckBolod,
                               ),
                               const SizedBox(height: 8),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(
-                                  recipe['instructions'].length,
-                                  (i) => Text(
-                                    "- ${recipe['instructions'][i]}",
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ),
+                                children: recipe.instructions
+                                    .map(
+                                      (i) => Text(
+                                        "- $i",
+                                        style: Textstyle.text16Balck,
+                                      ),
+                                    )
+                                    .toList(),
                               ),
                               const SizedBox(height: 16),
 
                               const Text(
                                 'Ingredients',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Textstyle.text20BalckBolod,
                               ),
                               const SizedBox(height: 8),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(
-                                  recipe['ingredients'].length,
-                                  (i) => Text(
-                                    "- ${recipe['ingredients'][i]}",
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                ),
+                                children: recipe.ingredients
+                                    .map(
+                                      (i) => Text(
+                                        "- $i",
+                                        style: Textstyle.text16Balck,
+                                      ),
+                                    )
+                                    .toList(),
                               ),
                             ],
                           ),
@@ -262,9 +225,7 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                         onPressed: () {},
                         child: const Text(
                           'watch video',
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 12, 177, 122),
-                          ),
+                          style: TextStyle(color: ColorStyle.greenColor),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -272,6 +233,11 @@ class _RandemRecipeScreenState extends State<RandemRecipeScreen> {
                   ),
                 ),
               ),
+            );
+          } else {
+            return const Center(child: Text("Error loading recipe"));
+          }
+        },
       ),
     );
   }

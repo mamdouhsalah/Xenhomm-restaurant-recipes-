@@ -1,7 +1,9 @@
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/colorStyle.dart';
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/textStyle.dart';
 import 'package:Xenhomm_restaurant_Recipes/feature/home/view/screen/favorate_screen.dart';
 import 'package:Xenhomm_restaurant_Recipes/feature/home/view/screen/profile_screen.dart';
 import 'package:Xenhomm_restaurant_Recipes/feature/home/view/screen/recipes_screen.dart';
-import 'package:Xenhomm_restaurant_Recipes/feature/home/view/widget/custom_widget.dart';
+import 'package:Xenhomm_restaurant_Recipes/feature/home/view/widget/Custom_driwer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,27 +24,23 @@ class _HomeScreenState extends State<HomeScreen> {
       FavoriteRecipesScreen(),
     ];
     return Scaffold(
-      backgroundColor: const Color(0xffFFFFFF),
+      backgroundColor: ColorStyle.whiteColor,
 
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-          size: 28,
-        ),
-        backgroundColor: const Color(0xFF0C8A68),
-        title: const Text(
+        iconTheme: const IconThemeData(color: ColorStyle.whiteColor, size: 28),
+        backgroundColor: ColorStyle.greenColor,
+        title: Text(
           'Hello: mamdouh',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
+          style: Textstyle.text16Balck.copyWith(
             fontFamily: 'Pacifico',
+            color: ColorStyle.whiteColor,
           ),
         ),
         actions: const [
           SizedBox(width: 10),
-          Icon(Icons.search, color: Colors.white),
+          Icon(Icons.search),
           SizedBox(width: 10),
-          Icon(Icons.supervised_user_circle, color: Colors.white),
+          Icon(Icons.person),
           SizedBox(width: 10),
         ],
       ),
@@ -54,8 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         elevation: 5,
         currentIndex: currentIndex,
-        selectedItemColor: Color(0xFF0C8A68),
-        unselectedItemColor: Color.fromARGB(255, 141, 182, 170),
+        selectedItemColor: ColorStyle.greenColor,
+        unselectedItemColor: ColorStyle.greyColor,
         selectedFontSize: 14,
         unselectedFontSize: 12,
 
@@ -65,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contact_page_rounded, size: 26),
+            icon: Icon(Icons.person, size: 26),
             label: "profile",
           ),
 

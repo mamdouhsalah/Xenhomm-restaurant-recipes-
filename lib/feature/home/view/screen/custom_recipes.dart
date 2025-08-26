@@ -1,3 +1,5 @@
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/colorStyle.dart';
+import 'package:Xenhomm_restaurant_Recipes/core/manger/style/textStyle.dart';
 import 'package:flutter/material.dart';
 
 class CustomRecipes extends StatelessWidget {
@@ -35,7 +37,7 @@ class CustomRecipes extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Card(
-            color: Colors.white.withOpacity(0.9),
+            color: ColorStyle.whiteColor.withOpacity(0.9),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -66,7 +68,7 @@ class CustomRecipes extends StatelessWidget {
                         child: IconButton(
                           icon: const Icon(
                             Icons.arrow_back_ios,
-                            color: Color.fromARGB(255, 12, 177, 122),
+                            color: ColorStyle.greenColor,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -79,7 +81,7 @@ class CustomRecipes extends StatelessWidget {
                         child: IconButton(
                           icon: const Icon(
                             Icons.favorite_border,
-                            color: Color.fromARGB(255, 12, 177, 122),
+                            color: ColorStyle.greenColor,
                           ),
                           onPressed: () {},
                         ),
@@ -96,14 +98,11 @@ class CustomRecipes extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: const TextStyle(
+                          style: Textstyle.text20BalckBolod.copyWith(
                             fontSize: 22,
                             fontFamily: 'Pacifico',
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(height: 12),
-
                         GridView.count(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -113,7 +112,7 @@ class CustomRecipes extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.green[100],
+                                color: ColorStyle.greenColor100,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               padding: const EdgeInsets.all(8),
@@ -126,7 +125,7 @@ class CustomRecipes extends StatelessWidget {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.orange[100],
+                                color: ColorStyle.orangeColor100,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               padding: const EdgeInsets.all(8),
@@ -139,7 +138,7 @@ class CustomRecipes extends StatelessWidget {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.purple[100],
+                                color: ColorStyle.purpelColor100,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               padding: const EdgeInsets.all(8),
@@ -157,10 +156,7 @@ class CustomRecipes extends StatelessWidget {
 
                         const Text(
                           'Instructions',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Textstyle.text20BalckBolod,
                         ),
                         const SizedBox(height: 8),
                         Column(
@@ -169,7 +165,7 @@ class CustomRecipes extends StatelessWidget {
                             instructions.length,
                             (i) => Text(
                               "- ${instructions[i]}",
-                              style: const TextStyle(fontSize: 16),
+                              style: Textstyle.text16Balck,
                             ),
                           ),
                         ),
@@ -177,10 +173,7 @@ class CustomRecipes extends StatelessWidget {
 
                         const Text(
                           'Ingredients',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Textstyle.text20BalckBolod,
                         ),
                         const SizedBox(height: 8),
                         Column(
@@ -189,7 +182,7 @@ class CustomRecipes extends StatelessWidget {
                             ingredients.length,
                             (i) => Text(
                               "- ${ingredients[i]}",
-                              style: const TextStyle(fontSize: 16),
+                              style: Textstyle.text16Balck,
                             ),
                           ),
                         ),
@@ -201,9 +194,7 @@ class CustomRecipes extends StatelessWidget {
                   onPressed: () {},
                   child: const Text(
                     'watch video',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 12, 177, 122),
-                    ),
+                    style: TextStyle(color: ColorStyle.greenColor),
                   ),
                 ),
                 const SizedBox(height: 10),
